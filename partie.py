@@ -1,5 +1,4 @@
 from etage import *
-import time
 import os
 
 class Partie:
@@ -10,9 +9,8 @@ class Partie:
 
     def start(self):
         directory = os.path.dirname(__file__)
-        list_dir = os.path.join(directory, "etages")
-        print(list_dir)
-        time.sleep(2)
-        self.stage.append(Etage(list_dir + "/etage1"))
+        liste_fichiers_etages = os.path.join(directory, "etages")
+        liste_fichiers_chemins = os.path.join(directory, "chemins")
+        self.stage.append(Etage(liste_fichiers_etages, liste_fichiers_chemins))
         self.stage[self.current_stage].print_stage(self.window)
         self.window.refresh()
