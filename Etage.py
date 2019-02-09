@@ -1,7 +1,6 @@
 from salle import Salle
 from chemin import Chemin
 
-
 class Etage:
     def __init__(self, path):
         self.salles = []

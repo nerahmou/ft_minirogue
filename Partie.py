@@ -1,7 +1,7 @@
 from etage import Etage
 #from joueur import Joueur
 import time
-#import os.listdir('')
+import os
 
 
 class Partie:
@@ -9,9 +9,12 @@ class Partie:
         self.window = window
         self.current_stage = 0
         self.stage = []
-        #self.joueur
 
     def start(self):
-        self.stage.append(Etage('etages/etage1'))
+        directory = os.path.dirname(__file__)
+        list_dir = os.path.join(directory, "etages")
+        print(list_dir)
+        time.sleep(2)
+        self.stage.append(Etage(list_dir + "/etage1"))
         self.stage[self.current_stage].print_stage(self.window)
         self.window.refresh()

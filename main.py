@@ -15,7 +15,6 @@ def init_curses(window):
     curses.cbreak()
     window.keypad(True)
     curses.curs_set(False)
-    return (window)
 
 def stop_curses(window):
     window.keypad(False)
@@ -36,7 +35,7 @@ def main(window):
     if curses.LINES < NLINE or curses.COLS < NCOLS:
         stop_curses(window)
         print("To small")
-        return 
+        exit(1)
     start_line = int((curses.LINES / 2)) - int((NLINE / 2))
     start_cols = int((curses.COLS / 2)) - int((NCOLS / 2))
     print(str(start_line) + " " + str(start_cols))
