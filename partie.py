@@ -1,8 +1,6 @@
-from etage import Etage
-#from joueur import Joueur
+from etage import *
 import time
 import os
-
 
 class Partie:
     def __init__(self, window):

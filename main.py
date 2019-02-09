@@ -5,7 +5,7 @@
 import time
 import curses
 from welcome import *
-from partie import Partie
+from partie import *
 
 NLINE = 30
 NCOLS = 100
@@ -27,6 +27,7 @@ def loop(window):
     partie.start()
     while 101:
         key = window.getch()
+        
         if (key == ord('q') or key == ord('Q')):
             break
 
