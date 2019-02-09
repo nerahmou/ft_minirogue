@@ -27,7 +27,6 @@ def loop(window):
     partie.start()
     while 101:
         key = window.getch()
-        
         if (key == ord('q') or key == ord('Q')):
             break
 

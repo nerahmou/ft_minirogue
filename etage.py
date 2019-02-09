@@ -27,6 +27,6 @@ class Etage:
 
     def print_stage(self, window):
         for salle in self.salles:
-            salle.print_salle(window)
+            salle.draw_room(window)
         for chemin in self.chemins:
             chemin.print_chemin(window)
