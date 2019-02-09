@@ -1,0 +1,17 @@
+ROGUE :
+
+1) Systeme du jeu :
+
+- Le joueur doit descendre dans un vaste ensemble sous terrain pour trouver l'amulette de Yendor et la ramener a la surface.
+- Le joueur n'a qu'une vie et une sauvegarde
+
+2) Mouvements :
+
+H : gauche
+J : bas
+K : haut
+L : droite
+
+Q : boire potion
+W : Porter armure
+E : manger
