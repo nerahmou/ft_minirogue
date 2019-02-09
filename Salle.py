@@ -1,4 +1,4 @@
-from porte import Porte
+from porte import *
 
 class Salle:
     def __init__(self, data):

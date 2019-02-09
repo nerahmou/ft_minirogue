@@ -1,5 +1,5 @@
-from salle import Salle
-from chemin import Chemin
+from salle import *
+from chemin import *
 
 
 class Etage:

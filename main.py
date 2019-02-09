@@ -5,7 +5,7 @@
 import time
 import curses
 from welcome import *
-from partie import Partie
+from partie import *
 
 NLINE = 30
 NCOLS = 100
