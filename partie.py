@@ -1,4 +1,5 @@
 from etage import *
+from many_class import *
 import os
 
 class Partie:
@@ -6,6 +7,7 @@ class Partie:
         self.window = window
         self.current_stage = 0
         self.stage = []
+        self.player = Playeur()
 
     def start(self):
         directory = os.path.dirname(__file__)
