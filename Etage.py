@@ -1,10 +1,24 @@
-import Salle
+from salle import Salle
+from chemin import Chemin
+
 
 class Etage:
-    def __init__(self):
-        self.salles = [Salle(40, 20, 5, 5),
-                       Salle(20, 10, 20, 20),
-                       Salle(10, 5, 30, 30)]
-
+    def __init__(self, path):
+        self.salles = []
         self.monstres = []
-        self.couloirs = []
+        self.chemins = []
+        self._new_stage(path)
+
+    def _new_stage(self, path):
+            with open(path) as file:
+                for line in file:
+                    self.salles.append(Salle(line.split(',')))
+            with open(path + "_chemins") as file:
+                for line in file:
+                    self.chemins.append(Chemin(line.split('/')))
+
+    def print_stage(self, window):
+        for salle in self.salles:
+            salle.print_salle(window)
+        for chemin in self.chemins:
+            chemin.print_chemin(window)

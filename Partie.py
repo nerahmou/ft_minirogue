@@ -1,14 +1,17 @@
-import Carte
+from etage import Etage
+#from joueur import Joueur
+import time
+#import os.listdir('')
+
 
 class Partie:
-    """
-    attr:
-        - carte
+    def __init__(self, window):
+        self.window = window
+        self.current_stage = 0
+        self.stage = []
+        #self.joueur
 
-    meth:
-        - creer_partie(self)
-    """
-    def __init__(self, stdscr):
-        #self.joueur = Joueur()
-        self.carte = Carte()
-
+    def start(self):
+        self.stage.append(Etage('etages/etage1'))
+        self.stage[self.current_stage].print_stage(self.window)
+        self.window.refresh()
