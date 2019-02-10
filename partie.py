@@ -58,11 +58,16 @@ class Partie:
         directory = os.path.dirname(__file__)
         path = os.path.join(directory, "text2.json")
         with open(path) as file:
-            data = json.load(file)
-            for floor in data["floor"]:
-                print(floor)
-                time.sleep(2)
-                self.floors.append(Floor(floor))
+            json_data = json.load(file)
+            for floor in json_data:
+                self.floors.append(Floor(json_data[floor]))
+                #print(json_data[floor])
+                #time.sleep(2)
+            #for elem in json_data["floor"]["road"]:
+            #    print(elem)
+            #   time.sleep(2)
+
+            exit(1)
 
     def _move_left(self, character, char):
         pos = character.pos

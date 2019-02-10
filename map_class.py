@@ -60,15 +60,15 @@ class Room:
     """
     room_id = 0
 
-    def __init__(self, dico):
+    def __init__(self, room):
         Mapobj.__init__(self)
         self.room_id += 1
-        self.ncols = dico["cols"]
-        self.nlines = dico["lines"]
-        self.pos = { 'x' : dico["x"], 'y' : dico['y'] }
+        self.ncols = room["ncols"]
+        self.nlines = room["nlines"]
+        self.pos = room["pos"]
         self.objets = []
         self.escalier = []
-        self.doors = self._feed_doors(dico["doors"])
+        self.doors = self._feed_doors(room["doors"])
 
     def _feed_doors(self, doors):
         liste_doors = []
@@ -101,10 +101,11 @@ class Road:
 
     """
     road_id = 0
-    def __init__(self, doors):
+    def __init__(self, door_ids):
         Mapobj.__init__(self)
         self.road_id += 1
-        self.doors = doors
+        self.doors = None
+        self.door_ids = door_ids["door_id1"], door_ids["door_id2"]
 
 #    def print_chemin(self, window):
 #        while self.long:
@@ -138,21 +139,22 @@ class Floor:
         print all room and road in this floor
     """
     floor_id = 0
-    def __init__(self, dico):
+    def __init__(self, floor):
         Mapobj.__init__(self)
         self.floor_id += 1
         self.rooms = []
         self.roads = []
         self.monstres = []
-        self._feed_rooms(dico)
-        self._feed_roads(dico)
+        self._feed_roads(floor['road'])
+        self._feed_rooms(floor['room'])
 
-    def _feed_rooms(self, dico):
-        for room in dico['room']:
+    def _feed_rooms(self, rooms):
+        print(rooms)
+        for room in rooms:
             self.rooms.append(Room(room))
 
-    def _feed_roads(self, dico):
-        for road in dico:
+    def _feed_roads(self, roads):
+        for road in roads:
             self.roads.append(Road(road))
 
     def print_stage(self, window):
