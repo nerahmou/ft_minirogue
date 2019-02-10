@@ -99,7 +99,7 @@ class Partie:
                 return 1
         return 0
 
-    def _collision(self, room_limit, pos, nbr):
+    def _collision_wall(self, room_limit, pos, nbr):
         if room_limit == pos + nbr:
             return 1
         return 0
@@ -107,7 +107,7 @@ class Partie:
     def _move_left(self, character, char):
         room = self.playeur.current_room
         pos = character.pos
-        if self._collision(room.pos['x'], pos['x'], -1):
+        if self._collision_wall(room.pos['x'], pos['x'], -1):
             if self._is_door(pos['x'] - 1, pos['y'], room):
                 char = "o "
                 self.window.addstr(pos['y'], pos['x'] - 2, character.char + char)
@@ -121,7 +121,7 @@ class Partie:
     def _move_right(self, character, char):
         room = self.playeur.current_room
         pos = character.pos
-        if self._collision(room.pos['x'] + room.ncols, pos['x'], 1):
+        if self._collision_wall(room.pos['x'] + room.ncols, pos['x'], 1):
             if self._is_door(pos['x'] + 1, pos['y'], room):
                 char = " o"
                 self.window.addstr(pos['y'], pos['x'],  char)
@@ -135,7 +135,7 @@ class Partie:
     def _move_up(self, character, char):
         room = self.playeur.current_room
         pos = character.pos
-        if self._collision(room.pos['y'], pos['y'], -1):
+        if self._collision_wall(room.pos['y'], pos['y'], -1):
             if self._is_door(pos['x'], pos['y'] - 1, room):
                 pass
             else:
@@ -147,7 +147,7 @@ class Partie:
     def _move_down(self, character, char):
         room = self.playeur.current_room
         pos = character.pos
-        if self._collision(room.pos['y'] + room.nlines, pos['y'], 1):
+        if self._collision_wall(room.pos['y'] + room.nlines, pos['y'], 1):
             if self._is_door(pos['x'], pos['y'] + 1, room):
                 pass
             else:
