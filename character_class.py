@@ -60,6 +60,7 @@ class Character(GameObject):
 
     def __init__(self):
         GameObject.__init__(self)
+        self.curent_room = None
         self.lv = 1
         self.hp = 1
         self.str = 1

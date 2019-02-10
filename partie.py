@@ -39,7 +39,6 @@ class Partie:
     def __init__(self, window):
         self.window = window
         self.current_floor = None
-        self.current_room = None
         self.floors = []
         self.road = []
         self.monsters = []
@@ -52,7 +51,7 @@ class Partie:
         """
         self._feed_floors()
         self.current_floor = self.floors[0]
-        self.current_room = self.floors[0].rooms[0]
+        self.playeur.current_room = self.floors[0].rooms[0]
         self._init_spaw()
         self.current_floor.draw_floor(self.window)
         self.window.refresh()
@@ -66,11 +65,12 @@ class Partie:
         pos['y'] = first_room.pos['y'] + first_room.nlines // 2
         first_room.nether_see = False
         first_room.hidden = False
+        self.playeur.current_room = first_room
         self.playeur.spwan_pos(pos)
         segond_room = self.floors[0].rooms[0]
         pos2 = {}
-        pos2['x'] = (segond_room.pos['x'] + segond_room.ncols // 2) + 2
-        pos2['y'] = (segond_room.pos['y'] + segond_room.nlines // 2)
+        pos2['x'] = 73
+        pos2['y'] = 16
         self.monster.spwan_pos(pos2)
 
     def _feed_floors(self):
@@ -82,12 +82,12 @@ class Partie:
                 self.floors.append(Floor(json_data[floor]))
 
     def _which_room(self, current_door, rooms):
-        self.current_room.hidden_room(self.window)
+        self.playeur.current_room.hidden_room(self.window)
         for room in rooms:
             for door in room.doors:
                 if current_door.id == door.id and current_door != door:
-                    self.current_room = room
-                    self.current_room.show_room(self.window)
+                    self.playeur.current_room = room
+                    self.playeur.current_room.show_room(self.window)
                     return
 
     def _is_door(self, pos_x, pos_y, room):
@@ -104,7 +104,7 @@ class Partie:
         return 0
 
     def _move_left(self, character, char):
-        room = self.current_room
+        room = self.playeur.current_room
         pos = character.pos
         if self._collision(room.pos['x'], pos['x'], -1):
             if self._is_door(pos['x'] - 1, pos['y'], room):
@@ -118,7 +118,7 @@ class Partie:
         character.pos['x'] = pos['x'] - 1
 
     def _move_right(self, character, char):
-        room = self.current_room
+        room = self.playeur.current_room
         pos = character.pos
         if self._collision(room.pos['x'] + room.ncols, pos['x'], 1):
             if self._is_door(pos['x'] + 1, pos['y'], room):
@@ -132,7 +132,7 @@ class Partie:
         character.pos['x'] = pos['x'] + 1
 
     def _move_up(self, character, char):
-        room = self.current_room
+        room = self.playeur.current_room
         pos = character.pos
         if self._collision(room.pos['y'], pos['y'], -1):
             if self._is_door(pos['x'], pos['y'] - 1, room):
@@ -144,7 +144,7 @@ class Partie:
         character.pos['y'] = pos['y'] - 1
 
     def _move_down(self, character, char):
-        room = self.current_room
+        room = self.playeur.current_room
         pos = character.pos
         if self._collision(room.pos['y'] + room.nlines, pos['y'], 1):
             if self._is_door(pos['x'], pos['y'] + 1, room):
@@ -164,6 +164,8 @@ class Partie:
             if (key == ord('q') or key == ord('Q')):
                 self.playeur.died(self.window)
                 break
+            elif (key == ord('b')):
+                print(self.playeur.pos)
             elif (key == ord('a')):
                 self._move_left(self.playeur, char)
             elif (key == ord('d')):
