@@ -142,7 +142,7 @@ class Playeur(Character):
         window.clear()
         window.addstr(tmp_x, tmp_y, msg)
         window.refresh()
-        time.sleep(3)
+        time.sleep(1)
 
     def draw_stat(self, window):
         string = "Level: " + str(self.lv) + "\t\tHp: " + str(self.hp) + "\t\tGold: " + str(self.gold) + "\t\tArmor: " + str(self.armor) + "\t\tExp:" + str(self.xp)

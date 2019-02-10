@@ -108,7 +108,10 @@ class Partie:
         pos = character.pos
         if self._collision(room.pos['x'], pos['x'], -1):
             if self._is_door(pos['x'] - 1, pos['y'], room):
-                pass
+                char = "o "
+                self.window.addstr(pos['y'], pos['x'] - 2, character.char + char)
+                character.pos['x'] = pos['x'] - 2
+                return
             else:
                 return
         self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
@@ -119,10 +122,12 @@ class Partie:
         pos = character.pos
         if self._collision(room.pos['x'] + room.ncols, pos['x'], 1):
             if self._is_door(pos['x'] + 1, pos['y'], room):
-                pass
+                char = " o"
+                self.window.addstr(pos['y'], pos['x'],  char)
+                character.pos['x'] = pos['x'] + 2
+                return
             else:
                 return
-        pos = character.pos
         self.window.addstr(pos['y'], pos['x'], char + character.char)
         character.pos['x'] = pos['x'] + 1
 
