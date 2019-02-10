@@ -42,6 +42,7 @@ class Partie:
         self.current_room = None
         self.floors = []
         self.road = []
+        self.monsters = []
         self.playeur = Playeur()
 
     def start(self):
@@ -53,17 +54,24 @@ class Partie:
         self.current_floor = self.floors[0]
         self.current_room = self.floors[0].rooms[0]
         self._init_spaw()
-        self.current_floor.print_floor(self.window)
+        self.current_floor.draw_floor(self.window)
         self.window.refresh()
         self._run()
 
     def _init_spaw(self):
+        self.monsters.append(Monster("bat", 1, 2, 1, 0, 'b'))
         first_room = self.floors[0].rooms[0]
-        ncols = first_room.ncols
-        nlines = first_room.nlines
-        pos = first_room.pos
-        self.playeur.spwan_pos(ncols, nlines, pos)
-
+        pos = {}
+        pos['x'] = first_room.pos['x'] + first_room.ncols // 2
+        pos['y'] = first_room.pos['y'] + first_room.nlines // 2
+        first_room.nether_see = False
+        first_room.hidden = False
+        self.playeur.spwan_pos(pos)
+        segond_room = self.floors[0].rooms[1]
+        pos2 = {}
+        pos2['x'] = segond_room.pos['x'] + segond_room.ncols // 2
+        pos2['y'] = segond_room.pos['y'] + segond_room.nlines // 2
+        self.monster.spwan_pos(pos2)
 
     def _feed_floors(self):
         directory = os.path.dirname(__file__)
@@ -117,6 +125,7 @@ class Partie:
         char = ' '
         while 101:
             self.playeur.print_obj(self.window)
+            self.monster.print_obj(self.window)
             key = self.window.getch()
             if (key == ord('q') or key == ord('Q')):
                 break
@@ -128,6 +137,7 @@ class Partie:
                 self._move_up(self.playeur, char)
             elif (key == ord('s')):
                 self._move_down(self.playeur, char)
+            self.playeur.draw_stat(self.window)
             self.window.refresh()
 
 

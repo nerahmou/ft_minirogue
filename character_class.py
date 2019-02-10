@@ -87,16 +87,19 @@ class Character(GameObject):
         while (self.xp / 10) >= self.lv:
             self._lv_up(self)
 
+    def spwan_pos(self, pos):
+        self.pos = pos
 
 class Monster(Character):
 
-    def __init__(self, name, lv, hp, gold, armor):
+    def __init__(self, name, lv, hp, gold, armor, char):
         Character.__init__(self)
         self.name = name
         self.lv = lv
         self.hp = hp
         self.gold = gold
-        self._virt_up(self)
+        self.char = char
+        self._virt_up()
 
     def _virt_up(self):
         self.hp = self.hp + (HP_RANK * self.lv)
@@ -132,8 +135,8 @@ class Playeur(Character):
         else:
             self.hp = self.hp_max
 
-    def spwan_pos(self, ncols, nlines, pos):
-        self.pos['x'] = pos['x'] + ncols // 2
-        self.pos['y'] = pos['y'] + nlines // 2
 
+    def draw_stat(self, window):
+        string = "Level: " + str(self.lv) + "\t\tHp: " + str(self.hp) + "\t\tGold: " + str(self.gold) + "\t\tArmor: " + str(self.armor) + "\t\tExp:" + str(self.xp)
+        window.addstr(28, 5, string)
 

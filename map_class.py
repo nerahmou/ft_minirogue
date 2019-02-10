@@ -75,7 +75,8 @@ class Room:
 
     def draw_room(self, window):
         draw_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
-        feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
+        if self.hidden == False:
+            feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
         for door in self.doors:
             door.draw_door(window)
 
@@ -153,10 +154,10 @@ class Floor:
         for road in roads:
             self.roads.append(Road(road))
 
-    def print_floor(self, window):
-        i = 0
+    def draw_floor(self, window):
         for room in self.rooms:
+            if room.nether_see == True:
+                continue
             room.draw_room(window)
-            i += 1
         #for chemin in self.road:
         #    chemin.print_chemin(window)
