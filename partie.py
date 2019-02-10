@@ -25,16 +25,6 @@ class Partie:
             self.nbr_stage += 1
             i += 1
 
-    def start(self):
-        """
-        Initialise les etages et rafraichit a la fin
-        :return:
-        """
-        self.create_stages()
-        self.stage[self.current_stage].print_stage(self.window)
-        self.window.refresh()
-        self.playeur.spwan_pos({'x' : 50, 'y' : 15})
-
     def _move_left(self, character, char):
         pos = character.pos
         self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
@@ -57,7 +47,7 @@ class Partie:
         self.window.addch(pos['y'] + 1, pos['x'], character.char)
         character.pos['y'] = pos['y'] + 1
 
-    def run(self):
+    def _run(self):
         char = ' '
         while 101:
             self.playeur.print_obj(self.window)
@@ -73,3 +63,15 @@ class Partie:
             if (key == ord('s')):
                 self._move_down(self.playeur, char)
             self.window.refresh()
+
+    def start(self):
+        """
+        Initialise les etages et rafraichit a la fin
+        :return:
+        """
+        self.create_stages()
+        self.stage[self.current_stage].print_stage(self.window)
+        self.playeur.spwan_pos({'x' : 50, 'y' : 15})
+        self.window.refresh()
+        self._run()
+
