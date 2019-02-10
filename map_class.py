@@ -3,6 +3,7 @@
 
 import time
 import curses
+from utile import *
 
 class Mapobj:
     """
@@ -36,13 +37,13 @@ class Door(Mapobj):
     def print_porte(self, window):
         window.addstr(self.pos['y'], self.pos['x'], 'o')
 
-
 class Room:
     """
     Attributes
     ----------
 
     ncols : int
+<<<<<<< HEAD
         nb of colune (x)
 
     nlines : int
@@ -57,8 +58,8 @@ class Room:
     doors : [Door]
         list of all door
     """
-
     room_id = 0
+
     def __init__(self, dico):
         Mapobj.__init__(self)
         self.room_id += 1
@@ -103,7 +104,7 @@ class Road:
     def __init__(self, doors):
         Mapobj.__init__(self)
         self.road_id += 1
-        self.doors = door
+        self.doors = doors
 
 #    def print_chemin(self, window):
 #        while self.long:
