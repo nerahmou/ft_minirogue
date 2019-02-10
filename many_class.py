@@ -2,6 +2,7 @@
 # lang: python3
 
 from random import randint
+from utile import *
 
 HP_RANK = 2
 STR_RANK = 1
@@ -25,8 +26,12 @@ class GameObject:
 
     def __init__(self):
         self.name = str()
-        self.pos = [0, 0]
+        self.pos = {'x' : 0, 'y' : 0}
         self.char = '.'
+
+    def print_obj(self, window):
+        window.addch(self.pos['y'], self.pos['x'], self.char)
+
 
 class Character(GameObject):
     """
@@ -125,5 +130,9 @@ class Playeur(Character):
             self.hp = self.hp + nb
         else:
             self.hp = self.hp_max
+
+    def spwan_pos(self, pos):
+        self.pos['x'] = pos['x']
+        self.pos['y'] = pos['y']
 
 

@@ -1,6 +1,9 @@
 
 import curses
 
+class VoidClass():
+    pass
+
 def draw_box(window, ref_y, ref_x, nb_line, nb_col):
     window.hline(ref_y, ref_x, 'A', nb_col)
     window.hline(ref_y + nb_line, ref_x, 'B', nb_col)

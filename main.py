@@ -22,14 +22,6 @@ def stop_curses(window):
     curses.echo()
     curses.endwin()
 
-def loop(window):
-    partie = Partie(window)
-    partie.start()
-    while 101:
-        key = window.getch()
-        if (key == ord('q') or key == ord('Q')):
-            break
-
 def main(window):
     init_curses(window)
     if curses.LINES < NLINE or curses.COLS < NCOLS:
@@ -42,7 +34,8 @@ def main(window):
     subwin = window.subwin(NLINE, NCOLS, start_line, start_cols)
     subwin.box()
     welcome(subwin)
-    loop(subwin)
+    partie = Partie(subwin)
+    partie.start()
     stop_curses(window)
 
 if __name__ == "__main__":
