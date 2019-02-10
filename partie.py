@@ -22,6 +22,9 @@ class Partie:
     floars : [FLoar]
         list of all floar
 
+    road : [Road]
+        list of all road
+
     Methods
     -------
 
@@ -35,7 +38,8 @@ class Partie:
     def __init__(self, window):
         self.window = window
         self.current_floar = None
-        self.floars = None
+        self.floars = []
+        self.road = []
         self.playeur = Playeur()
 
     def start(self):
@@ -55,7 +59,7 @@ class Partie:
         with open(path) as file:
             data = json.load(file)
             for etage in data:
-                self.floar.append(Floar(etage))
+                self.floars.append(Floar(etage))
 
     def _move_left(self, character, char):
         pos = character.pos
