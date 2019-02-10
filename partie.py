@@ -73,9 +73,19 @@ class Partie:
             for floor in json_data:
                 self.floors.append(Floor(json_data[floor]))
 
-    def _is_door(self, pos_x, pos_y, door_pos):
-        if door_pos['x'] == pos_x and door_pos['y'] == pos_y:
-            return 1
+    def _which_room(self, current_door, rooms):
+        for room in rooms:
+            for door in room.doors:
+                if current_door.id == door.id and current_door != door:
+                    self.current_room = room
+                    return
+
+    def _is_door(self, pos_x, pos_y, room):
+        doors = room.doors
+        for door in doors:
+            if door.pos['x'] == pos_x and door.pos['y'] == pos_y:
+                self._which_room(door, self.floors[0].rooms)
+                return 1
         return 0
 
     def _collision(self, room_limit, pos, nbr):
@@ -83,23 +93,11 @@ class Partie:
             return 1
         return 0
 
-
-    def _which_room(self, current_room):
-        rooms = self.floors[0].rooms
-        id_current_room = current_room.doors[0].id
-        i = 0
-        while i < len(rooms):
-            if rooms[i].doors[0].id == id_current_room and rooms[i] != current_room:
-                self.current_room = rooms[i]
-                break
-            i += 1
-
     def _move_left(self, character, char):
         room = self.current_room
         pos = character.pos
         if self._collision(room.pos['x'], pos['x'], -1):
-            if self._is_door(pos['x'] - 1, pos['y'], room.doors[0].pos):
-                self._which_room(room)
+            if self._is_door(pos['x'] - 1, pos['y'], room):
                 pass
             else:
                 return
@@ -110,8 +108,7 @@ class Partie:
         room = self.current_room
         pos = character.pos
         if self._collision(room.pos['x'] + room.ncols, pos['x'], 1):
-            if self._is_door(pos['x'] + 1, pos['y'], room.doors[0].pos):
-                self._which_room(room)
+            if self._is_door(pos['x'] + 1, pos['y'], room):
                 pass
             else:
                 return
@@ -123,8 +120,7 @@ class Partie:
         room = self.current_room
         pos = character.pos
         if self._collision(room.pos['y'], pos['y'], -1):
-            if self._is_door(pos['x'], pos['y'] - 1, room.doors[0].pos):
-                self._which_room(room)
+            if self._is_door(pos['x'], pos['y'] - 1, room):
                 pass
             else:
                 return
@@ -136,9 +132,7 @@ class Partie:
         room = self.current_room
         pos = character.pos
         if self._collision(room.pos['y'] + room.nlines, pos['y'], 1):
-            if self._is_door(pos['x'], pos['y'] + 1, room.doors[0].pos):
-                self._which_room(room)
-                character.pos['y'] += 1
+            if self._is_door(pos['x'], pos['y'] + 1, room):
                 pass
             else:
                 return
