@@ -104,6 +104,12 @@ class Partie:
             return 1
         return 0
 
+    def _collision_monster(self, playeur, monster, x, y):
+        if playeur.current_room == monster.current_room:
+            if (playeur.pos['x'] + x) == monster.pos['x'] and (playeur.pos['y'] + y) == monster.pos['y']:
+                return True
+        return False
+
     def _move_left(self, character, char):
         room = self.playeur.current_room
         pos = character.pos
@@ -115,6 +121,8 @@ class Partie:
                 return
             else:
                 return
+        if self._collision_monster(self.playeur, self.monster, -1, 0) == True:
+            return
         self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
         character.pos['x'] = pos['x'] - 1
 
@@ -129,6 +137,8 @@ class Partie:
                 return
             else:
                 return
+        if self._collision_monster(self.playeur, self.monster, 1, 0) == True:
+            return
         self.window.addstr(pos['y'], pos['x'], char + character.char)
         character.pos['x'] = pos['x'] + 1
 
@@ -140,6 +150,8 @@ class Partie:
                 pass
             else:
                 return
+        if self._collision_monster(self.playeur, self.monster, 0, -1) == True:
+            return
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] - 1, pos['x'], character.char)
         character.pos['y'] = pos['y'] - 1
@@ -152,6 +164,8 @@ class Partie:
                 pass
             else:
                 return
+        if self._collision_monster(self.playeur, self.monster, 0, 1) == True:
+            return
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] + 1, pos['x'], character.char)
         character.pos['y'] = pos['y'] + 1
@@ -167,6 +181,7 @@ class Partie:
                 break
             elif (key == ord('b')):
                 print(self.playeur.pos)
+                print(self.monster.pos)
             elif (key == ord('a')):
                 self._move_left(self.playeur, char)
             elif (key == ord('d')):
