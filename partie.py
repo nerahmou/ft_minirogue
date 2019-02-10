@@ -67,10 +67,11 @@ class Partie:
         first_room.hidden = False
         self.playeur.current_room = first_room
         self.playeur.spwan_pos(pos)
-        segond_room = self.floors[0].rooms[0]
+        segond_room = self.floors[0].rooms[2]
         pos2 = {}
-        pos2['x'] = 73
-        pos2['y'] = 16
+        pos2['x'] = segond_room.pos['x'] + segond_room.ncols // 2
+        pos2['y'] = segond_room.pos['y'] + segond_room.nlines // 2
+        self.monster.current_room = segond_room
         self.monster.spwan_pos(pos2)
 
     def _feed_floors(self):
