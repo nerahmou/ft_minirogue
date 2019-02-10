@@ -33,7 +33,7 @@ class Door(Mapobj):
         self.door = {'room' : room, 'road' : None}
         self.pos = { 'x' : x, 'y' : y}
 
-    def print_porte(self, window):
+    def draw_door(self, window):
         window.addstr(self.pos['y'], self.pos['x'], 'o')
 
 class Room:
@@ -67,7 +67,7 @@ class Room:
         self.objets = []
         self.escalier = []
         self.doors = []
-        self.doors = self._feed_doors(room['doors'])
+        self._feed_doors(room['doors'])
 
     def _feed_doors(self, doors):
         for door in doors:
@@ -76,8 +76,8 @@ class Room:
     def draw_room(self, window):
         draw_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
         feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
-        #for door in self.doors:
-         #   door.print_door(window)
+        for door in self.doors:
+            door.draw_door(window)
 
 
 class Road:
