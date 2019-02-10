@@ -1,27 +1,28 @@
+#coding: utf8
+# lang: python3
+
 import curses
-from door import *
-from utile import *
 
 class Room:
-        """
-        Attributes
-        ----------
+    """
+    Attributes
+    ----------
 
-        ncols : int
-            nb of colune (x)
+    ncols : int
+        nb of colune (x)
 
-        nlines : int
-            nb of line (y)
+    nlines : int
+        nb of line (y)
 
-        pos : { 'x' : int, 'y' : int }
-            y pos of the top left wal
-        
-        hidden : bol
-            show or not the rooml
+    pos : { 'x' : int, 'y' : int }
+        y pos of the top left wal
 
-        doors : [Door]
-            list of all door
-        """
+    hidden : bol
+        show or not the rooml
+
+    doors : [Door]
+        list of all door
+    """
 
     room_id = 0
     def __init__(self, dico):

@@ -1,24 +1,61 @@
-from etage import *
-from many_class import *
+# coding: utf8
+# lang: python 3
+
 import curses
 import os
 import json
 
+from map_class import *
+from character_class import *
+
 class Partie:
+    """
+    Attributes
+    ----------
+
+    window : curses window
+        window return by curses
+
+    current_floar : Floar
+        curent Floar were ise the playeur
+
+    floars : [FLoar]
+        list of all floar
+
+    Methods
+    -------
+
+    start()
+        init all thing befor run the game
+
+    _run()
+        run the game is a loop
+
+    """
     def __init__(self, window):
         self.window = window
-        self.current_stage = 0
-        self.nbr_stage = 0
-        self.stage = []
+        self.current_floar = None
+        self.floars = None
         self.playeur = Playeur()
 
-    def create_stages(self):
+    def start(self):
+        """
+        Initialise les etages et rafraichit a la fin
+        :return:
+        """
+        self._feed_floars()
+        self.playeur.spwan_pos({'x' : 50, 'y' : 15})
+        self.current_floar.print_floar(self.window)
+        self.window.refresh()
+        self._run()
+
+    def _feed_floars(self):
         directory = os.path.dirname(__file__)
         path = os.path.join(directory, "text.json")
         with open(path) as file:
             data = json.load(file)
             for etage in data:
-                self.stage.append(Etage(etage))
+                self.floar.append(Floar(etage))
 
     def _move_left(self, character, char):
         pos = character.pos
@@ -59,14 +96,4 @@ class Partie:
                 self._move_down(self.playeur, char)
             self.window.refresh()
 
-    def start(self):
-        """
-        Initialise les etages et rafraichit a la fin
-        :return:
-        """
-        self.create_stages()
-        self.stage[self.current_stage].print_stage(self.window)
-        self.playeur.spwan_pos({'x' : 50, 'y' : 15})
-        self.window.refresh()
-        self._run()
 
