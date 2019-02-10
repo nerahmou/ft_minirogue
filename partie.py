@@ -113,8 +113,8 @@ class Partie:
     def _collision_obj(self, playeur, x, y):
         for obj in playeur.current_room.objets:
             if (playeur.pos['x'] + x) == obj.pos['x'] and (playeur.pos['y'] + y) == obj.pos['y']:
-                return True
-        return False
+                return obj
+        return None
 
     def _move_left(self, character, char):
         room = self.playeur.current_room
@@ -128,9 +128,12 @@ class Partie:
             else:
                 return
         if self._collision_monster(self.playeur, self.monster, -1, 0) == True:
+            playeur.do_domage(self.monster)
             return
-        if self._collision_obj(self.playeur, -1, 0) == True:
-            return
+        tmp = self._collision_obj(self.playeur, -1, 0) 
+        if tmp != None:
+            tmp.use_obj(self.playeur)
+            self.playeur.current_room.objets.remove(tmp)
         self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
         self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
         character.pos['x'] = pos['x'] - 1
@@ -147,9 +150,12 @@ class Partie:
             else:
                 return
         if self._collision_monster(self.playeur, self.monster, 1, 0) == True:
+            playeur.do_domage(self.monster)
             return
-        if self._collision_obj(self.playeur, 1, 0) == True:
-            return
+        tmp = self._collision_obj(self.playeur, 1, 0) 
+        if tmp != None:
+            tmp.use_obj(self.playeur)
+            return 
         self.window.addstr(pos['y'], pos['x'], char + character.char)
         self.window.addstr(pos['y'], pos['x'], char + character.char)
         character.pos['x'] = pos['x'] + 1
@@ -163,9 +169,12 @@ class Partie:
             else:
                 return
         if self._collision_monster(self.playeur, self.monster, 0, -1) == True:
+            playeur.do_domage(self.monster)
             return
-        if self._collision_obj(self.playeur, 0, -1) == True:
-            return
+        tmp = self._collision_obj(self.playeur, 0, -1) 
+        if tmp != None:
+            tmp.use_obj(self.playeur)
+            return 
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] - 1, pos['x'], character.char)
         character.pos['y'] = pos['y'] - 1
@@ -179,9 +188,12 @@ class Partie:
             else:
                 return
         if self._collision_monster(self.playeur, self.monster, 0, 1) == True:
+            playeur.do_domage(self.monster)
             return
-        if self._collision_obj(self.playeur, 0, 1) == True:
-            return
+        tmp = self._collision_obj(self.playeur, 0, 1) 
+        if tmp != None:
+            tmp.use_obj(self.playeur)
+            return 
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] + 1, pos['x'], character.char)
         character.pos['y'] = pos['y'] + 1

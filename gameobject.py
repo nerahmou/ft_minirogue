@@ -23,7 +23,7 @@ class Items:
     def _draw_object(self, window):
         window.addch(self.pos['y'], self.pos['x'], self.char)
 
-    def _use_player(self, player):
+    def use_obj(self, player):
         pass
 
 class Poison(Items):
@@ -32,7 +32,7 @@ class Poison(Items):
         y = room.pos['y']
         Items.__init__(self, x + 5, y + 1, 'P', 10)
 
-    def _use_player(self, player):
+    def use_obj(self, player):
         player.hp -= self.points
 
 class Bread(Items):
@@ -41,5 +41,5 @@ class Bread(Items):
         y = room.pos['y']
         Items.__init__(self, x + 2, y + 1, 'B', 20)
 
-    def _use_player(self, player):
+    def use_obj(self, player):
         player.hp += self.points
