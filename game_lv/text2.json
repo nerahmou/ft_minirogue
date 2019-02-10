@@ -1,0 +1,42 @@
+{
+	"floor":{
+		"room": [
+		{
+			"ncols": 17,
+				"nlines": 6,
+				"pos":{
+					"x": 23,
+					"y": 13
+				},
+				"doors":{
+					"door_id":1,
+					"pos":{
+						"x": 40,
+						"y": 16
+					}
+				}
+		},
+		{
+			"ncols": 15,
+			"nlines": 6,
+			"pos":{
+				"x": 43,
+				"y": 13
+			},
+			"doors":{
+				"door_id":2,
+				"pos":{
+					"x": 43,
+					"y": 16
+				}
+			}
+		}
+		],
+		"road": [
+		{
+			"door_id1":1,
+			"door_id2":2
+		}
+		]
+	}
+}
