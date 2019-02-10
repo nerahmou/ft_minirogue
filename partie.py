@@ -3,6 +3,7 @@
 
 import curses
 import os
+import time
 import json
 
 from map_class import *
@@ -16,11 +17,11 @@ class Partie:
     window : curses window
         window return by curses
 
-    current_floar : Floar
-        curent Floar were ise the playeur
+    current_floor : floor
+        curent floor were ise the playeur
 
-    floars : [FLoar]
-        list of all floar
+    floors : [floor]
+        list of all floor
 
     road : [Road]
         list of all road
@@ -37,8 +38,8 @@ class Partie:
     """
     def __init__(self, window):
         self.window = window
-        self.current_floar = None
-        self.floars = []
+        self.current_floor = None
+        self.floors = []
         self.road = []
         self.playeur = Playeur()
 
@@ -47,19 +48,21 @@ class Partie:
         Initialise les etages et rafraichit a la fin
         :return:
         """
-        self._feed_floars()
+        self._feed_floors()
         self.playeur.spwan_pos({'x' : 50, 'y' : 15})
-        self.current_floar.print_floar(self.window)
+        self.current_floor.print_floor(self.window)
         self.window.refresh()
         self._run()
 
-    def _feed_floars(self):
+    def _feed_floors(self):
         directory = os.path.dirname(__file__)
-        path = os.path.join(directory, "text.json")
+        path = os.path.join(directory, "text2.json")
         with open(path) as file:
             data = json.load(file)
-            for etage in data:
-                self.floars.append(Floar(etage))
+            for floor in data["floor"]:
+                print(floor)
+                time.sleep(2)
+                self.floors.append(Floor(floor))
 
     def _move_left(self, character, char):
         pos = character.pos

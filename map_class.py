@@ -1,6 +1,7 @@
 #coding: utf8
 # lang: python3
 
+import time
 import curses
 
 class Mapobj:
@@ -110,7 +111,7 @@ class Road:
 #            self.long -= 1
 
 
-class Floar:
+class Floor:
     """
     Etage
 
@@ -118,10 +119,10 @@ class Floar:
     ---------
 
     room : [Room]
-        list of all room in this floar
+        list of all room in this floor
 
     road : [Road]
-        list of all road in this floar
+        list of all road in this floor
 
     Methods
     -------
@@ -133,12 +134,12 @@ class Floar:
         add all road in road
 
     PrintStage(windo)
-        print all room and road in this floar
+        print all room and road in this floor
     """
-    floar_id = 0
+    floor_id = 0
     def __init__(self, dico):
         Mapobj.__init__(self)
-        self.floar_id += 1
+        self.floor_id += 1
         self.rooms = []
         self.roads = []
         self.monstres = []
@@ -150,7 +151,7 @@ class Floar:
             self.rooms.append(Room(room))
 
     def _feed_roads(self, dico):
-        for road in dico['road']:
+        for road in dico:
             self.roads.append(Road(road))
 
     def print_stage(self, window):
