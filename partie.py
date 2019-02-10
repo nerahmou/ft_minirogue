@@ -59,7 +59,7 @@ class Partie:
         self._run()
 
     def _init_spaw(self):
-        self.monsters.append(Monster("bat", 1, 2, 1, 0, 'b'))
+        self.monster = Monster("bat", 1, 2, 1, 0, 'b')
         first_room = self.floors[0].rooms[0]
         pos = {}
         pos['x'] = first_room.pos['x'] + first_room.ncols // 2
@@ -96,9 +96,11 @@ class Partie:
         rooms = self.floors[0].rooms
         id_current_room = current_room.doors[0].id
         i = 0
+        self.current_room.hidden_room(self.window)
         while i < len(rooms):
             if rooms[i].doors[0].id == id_current_room and rooms[i] != current_room:
                 self.current_room = rooms[i]
+                self.current_room.show_room(self.window)
                 break
             i += 1
 

@@ -75,10 +75,18 @@ class Room:
     def draw_room(self, window):
         draw_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
         if self.hidden == False:
-            feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
+            feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols, ".")
         for door in self.doors:
             door.draw_door(window)
 
+    def hidden_room(self, window):
+        self.hidden = True
+        feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols, " ")
+
+    def show_room(self, window):
+        self.hidden = False
+        self.nether_see = True
+        self.draw_room(window)
 
 class Road:
     """
