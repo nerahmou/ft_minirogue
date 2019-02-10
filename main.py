@@ -25,10 +25,11 @@ def stop_curses(window):
 def loop(window):
     partie = Partie(window)
     partie.start()
-    while 101:
-        key = window.getch()
-        if (key == ord('q') or key == ord('Q')):
-            break
+    partie.run()
+    #while 101:
+    #    key = window.getch()
+    #   if (key == ord('q') or key == ord('Q')):
+    #        break
 
 def main(window):
     init_curses(window)
