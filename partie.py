@@ -1,6 +1,7 @@
 from etage import *
 from many_class import *
 import os
+import json
 
 class Partie:
     def __init__(self, window):
@@ -12,17 +13,11 @@ class Partie:
 
     def create_stages(self):
         directory = os.path.dirname(__file__)
-        etages = os.path.join(directory, "etages")
-        chemins = os.path.join(directory, "chemins")
-        etages = [os.path.join(etages, filename) for filename in os.listdir(etages)]
-        chemins = [os.path.join(chemins, filename) for filename in os.listdir(chemins)]
-        etages.sort()
-        chemins.sort()
-        i = 0
-        while i < len(etages):
-            self.stage.append(Etage(etages[i], chemins[i]))
-            self.nbr_stage += 1
-            i += 1
+        path = os.path.join(directory, "text.json")
+        with open(path) as file:
+            data = json.load(file)
+            for etage in data:
+                self.stage.append(Etage(etage))
 
     def start(self):
         """

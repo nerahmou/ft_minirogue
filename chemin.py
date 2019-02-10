@@ -1,9 +1,11 @@
 
 class Chemin:
-    def __init__(self, data):
-        self.x = int(data[0])
-        self.y = int(data[1])
-        self.long = int(data[2])
+    def __init__(self, chemin):
+        self.x = chemin["x"]
+        self.y = chemin["y"]
+        self.direction = chemin["direction"]
+        self.long = chemin["longueur"]
+
 
     def print_chemin(self, window):
         while self.long:

@@ -4,22 +4,23 @@ import time
 import os
 
 class Etage:
-    def __init__(self, path_etages, path_chemins):
+    def __init__(self, dico):
         self.salles = []
         self.monstres = []
         self.chemins = []
-        self._new_stage(path_etages, path_chemins)
+        self._new_stage(dico)
 
-    def _new_stage(self, etage_file, chemins_file):
-        with open(etage_file) as file:
-            for line in file:
-                self.salles.append(Salle(line.split(',')))
-        with open(chemins_file) as file:
-            for line in file:
-                self.chemins.append(Chemin(line.split('/')))
+    def _new_stage(self, dico):
+        self.salles.append(Salle(dico))
+        if "chemins" in dico:
+            for chemin in dico["chemins"]:
+                self.chemins.append(Chemin(chemin))
 
     def print_stage(self, window):
+        i = 0
         for salle in self.salles:
             salle.draw_room(window)
-        for chemin in self.chemins:
-            chemin.print_chemin(window)
+            i += 1
+        print(self.salles)
+        #for chemin in self.chemins:
+        #    chemin.print_chemin(window)
