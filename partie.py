@@ -50,6 +50,7 @@ class Partie:
         """
         self._feed_floors()
         self.playeur.spwan_pos({'x' : 50, 'y' : 15})
+        self.current_floor = self.floors[0]
         self.current_floor.print_floor(self.window)
         self.window.refresh()
         self._run()
@@ -61,13 +62,9 @@ class Partie:
             json_data = json.load(file)
             for floor in json_data:
                 self.floors.append(Floor(json_data[floor]))
-                #print(json_data[floor])
-                #time.sleep(2)
             #for elem in json_data["floor"]["road"]:
             #    print(elem)
             #   time.sleep(2)
-
-            exit(1)
 
     def _move_left(self, character, char):
         pos = character.pos

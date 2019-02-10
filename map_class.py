@@ -27,12 +27,11 @@ class Door(Mapobj):
     rooms : {'room' : Room, 'road' : Road}
          room and road on comunication
     """
-    door_id = 0
-    def __init__(self, pos, room, road):
+    def __init__(self, x, y, door_id, room):
         Mapobj.__init__(self)
-        self.door_id += 1
-        self.door = {'room' : room, 'road' : road}
-        self.pos = pos
+        self.door_id = 1
+        self.door = {'room' : room, 'road' : None}
+        self.pos = { 'x' : x, 'y' : y}
 
     def print_porte(self, window):
         window.addstr(self.pos['y'], self.pos['x'], 'o')
@@ -43,7 +42,6 @@ class Room:
     ----------
 
     ncols : int
-<<<<<<< HEAD
         nb of colune (x)
 
     nlines : int
@@ -68,17 +66,16 @@ class Room:
         self.pos = room["pos"]
         self.objets = []
         self.escalier = []
-        self.doors = self._feed_doors(room["doors"])
+        self.doors = []
+        self.doors = self._feed_doors(room['doors'])
 
     def _feed_doors(self, doors):
-        liste_doors = []
         for door in doors:
-            liste_doors.append(Door(door))
-        return liste_doors
+            self.doors.append(Door(door["pos"]['x'], door["pos"]['y'], door["door_id"], self))
 
     def draw_room(self, window):
-        draw_box(window, self.pos_y, self.pos_x, self.nlines, self.ncols)
-        feed_box(window, self.pos_y, self.pos_x, self.nlines, self.ncols)
+        draw_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
+        feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols)
         #for door in self.doors:
          #   door.print_door(window)
 
@@ -149,7 +146,6 @@ class Floor:
         self._feed_rooms(floor['room'])
 
     def _feed_rooms(self, rooms):
-        print(rooms)
         for room in rooms:
             self.rooms.append(Room(room))
 
@@ -157,11 +153,10 @@ class Floor:
         for road in roads:
             self.roads.append(Road(road))
 
-    def print_stage(self, window):
+    def print_floor(self, window):
         i = 0
         for room in self.rooms:
             room.draw_room(window)
             i += 1
-        print(self.rooms)
         #for chemin in self.road:
         #    chemin.print_chemin(window)
