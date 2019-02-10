@@ -3,6 +3,7 @@
 
 from random import randint
 from utile import *
+import time
 
 HP_RANK = 2
 STR_RANK = 1
@@ -131,8 +132,8 @@ class Playeur(Character):
         else:
             self.hp = self.hp_max
 
-    def spwan_pos(self, pos):
-        self.pos['x'] = pos['x']
-        self.pos['y'] = pos['y']
+    def spwan_pos(self, ncols, nlines, pos):
+        self.pos['x'] = pos['x'] + ncols // 2
+        self.pos['y'] = pos['y'] + nlines // 2
 
 

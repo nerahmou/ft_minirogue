@@ -39,6 +39,7 @@ class Partie:
     def __init__(self, window):
         self.window = window
         self.current_floor = None
+        self.current_room = None
         self.floors = []
         self.road = []
         self.playeur = Playeur()
@@ -49,11 +50,20 @@ class Partie:
         :return:
         """
         self._feed_floors()
-        self.playeur.spwan_pos({'x' : 50, 'y' : 15})
         self.current_floor = self.floors[0]
+        self.current_room = self.floors[0].rooms[0]
+        self._init_spaw()
         self.current_floor.print_floor(self.window)
         self.window.refresh()
         self._run()
+
+    def _init_spaw(self):
+        first_room = self.floors[0].rooms[0]
+        ncols = first_room.ncols
+        nlines = first_room.nlines
+        pos = first_room.pos
+        self.playeur.spwan_pos(ncols, nlines, pos)
+
 
     def _feed_floors(self):
         directory = os.path.dirname(__file__)
@@ -62,28 +72,43 @@ class Partie:
             json_data = json.load(file)
             for floor in json_data:
                 self.floors.append(Floor(json_data[floor]))
-            #for elem in json_data["floor"]["road"]:
-            #    print(elem)
-            #   time.sleep(2)
+
+    def _collision(self, room_limit, pos, nbr):
+        if room_limit == pos + nbr:
+            return 1
+        return 0
 
     def _move_left(self, character, char):
+        room = self.current_room
         pos = character.pos
+        if self._collision(room.pos['x'], pos['x'], -1):
+            return
         self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
         character.pos['x'] = pos['x'] - 1
 
     def _move_right(self, character, char):
+        room = self.current_room
+        pos = character.pos
+        if self._collision(room.pos['x'] + room.ncols, pos['x'], 1):
+            return
         pos = character.pos
         self.window.addstr(pos['y'], pos['x'], char + character.char)
         character.pos['x'] = pos['x'] + 1
 
     def _move_up(self, character, char):
+        room = self.current_room
         pos = character.pos
+        if self._collision(room.pos['y'], pos['y'], -1):
+            return
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] - 1, pos['x'], character.char)
         character.pos['y'] = pos['y'] - 1
 
     def _move_down(self, character, char):
+        room = self.current_room
         pos = character.pos
+        if self._collision(room.pos['y'] + room.nlines, pos['y'], 1):
+            return
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] + 1, pos['x'], character.char)
         character.pos['y'] = pos['y'] + 1
@@ -95,13 +120,13 @@ class Partie:
             key = self.window.getch()
             if (key == ord('q') or key == ord('Q')):
                 break
-            if (key == ord('a')):
+            elif (key == ord('a')):
                 self._move_left(self.playeur, char)
-            if (key == ord('d')):
+            elif (key == ord('d')):
                 self._move_right(self.playeur, char)
-            if (key == ord('w')):
+            elif (key == ord('w')):
                 self._move_up(self.playeur, char)
-            if (key == ord('s')):
+            elif (key == ord('s')):
                 self._move_down(self.playeur, char)
             self.window.refresh()
 
