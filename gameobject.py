@@ -1,7 +1,7 @@
 # coding: utf8
 # lang: python3
 
-class GameObject:
+class Items:
     """
     Attributes
     ----------
@@ -16,18 +16,15 @@ class GameObject:
         char represent
     """
     def __init__(self, pos_x, pos_y, char, points):
-        self.pos = pos_x, pos_y
+        self.pos = { 'x' :pos_x, 'y' : pos_y}
         self.char = char
         self.points = points
 
     def _draw_object(self, window):
-        window.addch(self.pos[1], self.pos[0], self.char)
+        window.addch(self.pos['y'], self.pos['x'], self.char)
 
-
-class Items(GameObject):
-    def __init__(self, pos_x, pos_y, char, points):
-        GameObject.__init__(self, pos_x, pos_y, char, points)
-
+    def _use_player(self, player):
+        pass
 
 class Poison(Items):
     def __init__(self, room):
@@ -35,7 +32,7 @@ class Poison(Items):
         y = room.pos['y']
         Items.__init__(self, x + 5, y + 1, 'P', 10)
 
-    def _beat_player(self, player):
+    def _use_player(self, player):
         player.hp -= self.points
 
 class Bread(Items):
@@ -44,5 +41,5 @@ class Bread(Items):
         y = room.pos['y']
         Items.__init__(self, x + 2, y + 1, 'B', 20)
 
-    def _feed_player(self, player):
+    def _use_player(self, player):
         player.hp += self.points

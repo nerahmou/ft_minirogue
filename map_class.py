@@ -68,11 +68,11 @@ class Room:
         self.escalier = []
         self.doors = []
         self._feed_doors(room['doors'])
-        self._feed_objets(Bread(self), Poison(self))
+        self._feed_objets()
 
-    def _feed_objets(self, bread, poison):
-        self.objets.append(bread)
-        self.objets.append(poison)
+    def _feed_objets(self):
+        self.objets.append(Bread(self))
+        self.objets.append(Poison(self))
 
     def _feed_doors(self, doors):
         for door in doors:

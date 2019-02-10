@@ -110,6 +110,12 @@ class Partie:
                 return True
         return False
 
+    def _collision_obj(self, playeur, x, y):
+        for obj in playeur.current_room.objets:
+            if (playeur.pos['x'] + x) == obj.pos['x'] and (playeur.pos['y'] + y) == obj.pos['y']:
+                return True
+        return False
+
     def _move_left(self, character, char):
         room = self.playeur.current_room
         pos = character.pos
@@ -123,6 +129,9 @@ class Partie:
                 return
         if self._collision_monster(self.playeur, self.monster, -1, 0) == True:
             return
+        if self._collision_obj(self.playeur, -1, 0) == True:
+            return
+        self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
         self.window.addstr(pos['y'], pos['x'] - 1, character.char + char)
         character.pos['x'] = pos['x'] - 1
 
@@ -139,6 +148,9 @@ class Partie:
                 return
         if self._collision_monster(self.playeur, self.monster, 1, 0) == True:
             return
+        if self._collision_obj(self.playeur, 1, 0) == True:
+            return
+        self.window.addstr(pos['y'], pos['x'], char + character.char)
         self.window.addstr(pos['y'], pos['x'], char + character.char)
         character.pos['x'] = pos['x'] + 1
 
@@ -151,6 +163,8 @@ class Partie:
             else:
                 return
         if self._collision_monster(self.playeur, self.monster, 0, -1) == True:
+            return
+        if self._collision_obj(self.playeur, 0, -1) == True:
             return
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] - 1, pos['x'], character.char)
@@ -165,6 +179,8 @@ class Partie:
             else:
                 return
         if self._collision_monster(self.playeur, self.monster, 0, 1) == True:
+            return
+        if self._collision_obj(self.playeur, 0, 1) == True:
             return
         self.window.addch(pos['y'], pos['x'], char)
         self.window.addch(pos['y'] + 1, pos['x'], character.char)
