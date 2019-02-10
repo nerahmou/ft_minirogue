@@ -67,10 +67,10 @@ class Partie:
         first_room.nether_see = False
         first_room.hidden = False
         self.playeur.spwan_pos(pos)
-        segond_room = self.floors[0].rooms[1]
+        segond_room = self.floors[0].rooms[0]
         pos2 = {}
-        pos2['x'] = segond_room.pos['x'] + segond_room.ncols // 2
-        pos2['y'] = segond_room.pos['y'] + segond_room.nlines // 2
+        pos2['x'] = (segond_room.pos['x'] + segond_room.ncols // 2) + 2
+        pos2['y'] = (segond_room.pos['y'] + segond_room.nlines // 2)
         self.monster.spwan_pos(pos2)
 
     def _feed_floors(self):
@@ -157,12 +157,13 @@ class Partie:
         character.pos['y'] = pos['y'] + 1
 
     def _run(self):
-        char = ' '
+        char = '.'
         while 101:
             self.playeur.print_obj(self.window)
             self.monster.print_obj(self.window)
             key = self.window.getch()
             if (key == ord('q') or key == ord('Q')):
+                self.playeur.died(self.window)
                 break
             elif (key == ord('a')):
                 self._move_left(self.playeur, char)

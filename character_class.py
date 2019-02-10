@@ -135,6 +135,14 @@ class Playeur(Character):
         else:
             self.hp = self.hp_max
 
+    def died(self, window):
+        msg = "YOU DIED"
+        tmp_y = int(50 - int(len(msg) / 2))
+        tmp_x = int((30 / 3) - 1)
+        window.clear()
+        window.addstr(tmp_x, tmp_y, msg)
+        window.refresh()
+        time.sleep(3)
 
     def draw_stat(self, window):
         string = "Level: " + str(self.lv) + "\t\tHp: " + str(self.hp) + "\t\tGold: " + str(self.gold) + "\t\tArmor: " + str(self.armor) + "\t\tExp:" + str(self.xp)
