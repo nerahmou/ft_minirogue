@@ -7,14 +7,30 @@ class Partie:
     def __init__(self, window):
         self.window = window
         self.current_stage = 0
+        self.nbr_stage = 0
         self.stage = []
         self.playeur = Playeur()
 
-    def start(self):
+    def create_stages(self):
         directory = os.path.dirname(__file__)
-        liste_fichiers_etages = os.path.join(directory, "etages")
-        liste_fichiers_chemins = os.path.join(directory, "chemins")
-        self.stage.append(Etage(liste_fichiers_etages, liste_fichiers_chemins))
+        etages = os.path.join(directory, "etages")
+        chemins = os.path.join(directory, "chemins")
+        etages = [os.path.join(etages, filename) for filename in os.listdir(etages)]
+        chemins = [os.path.join(chemins, filename) for filename in os.listdir(chemins)]
+        etages.sort()
+        chemins.sort()
+        i = 0
+        while i < len(etages):
+            self.stage.append(Etage(etages[i], chemins[i]))
+            self.nbr_stage += 1
+            i += 1
+
+    def start(self):
+        """
+        Initialise les etages et rafraichit a la fin
+        :return:
+        """
+        self.create_stages()
         self.stage[self.current_stage].print_stage(self.window)
         self.window.refresh()
         self.playeur.spwan_pos({'x' : 50, 'y' : 15})
