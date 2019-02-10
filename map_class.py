@@ -1,29 +1,28 @@
 import curses
-from door import *
 from utile import *
 
 class Room:
-        """
-        Attributes
-        ----------
+    """
+    Attributes
+    ----------
 
-        ncols : int
-            nb of colune (x)
+    ncols : int
+    nb of colune (x)
 
-        nlines : int
-            nb of line (y)
+    nlines : int
+    nb of line (y)
 
-        pos : { 'x' : int, 'y' : int }
-            y pos of the top left wal
+    pos : { 'x' : int, 'y' : int }
+        y pos of the top left wal
         
         hidden : bol
             show or not the rooml
 
         doors : [Door]
             list of all door
-        """
-
+    """
     room_id = 0
+
     def __init__(self, dico):
         self.room_id += 1
         self.ncols = dico["cols"]
@@ -90,7 +89,7 @@ class Road:
     road_id = 0
     def __init__(self, doors):
         self.road_id += 1
-        self.doors = door
+        self.doors = doors
 
 #    def print_chemin(self, window):
 #        while self.long:

@@ -1,5 +1,4 @@
-from room import *
-from road import *
+from map_class import *
 import time
 import os
 
