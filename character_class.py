@@ -120,7 +120,7 @@ class Playeur(Character):
         Character.__init__(self)
         self.name = "Playeur 1"
         self.char = '@'
-        self.hp_max = 10
+        self.hp_max = 50
         self.hp = 10
         self.xp = 1
         self.str = 1

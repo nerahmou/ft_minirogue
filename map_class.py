@@ -4,6 +4,7 @@
 import time
 import curses
 from utile import *
+from gameobject import *
 
 class Mapobj:
     """
@@ -67,6 +68,11 @@ class Room:
         self.escalier = []
         self.doors = []
         self._feed_doors(room['doors'])
+        self._feed_objets(Bread(self), Poison(self))
+
+    def _feed_objets(self, bread, poison):
+        self.objets.append(bread)
+        self.objets.append(poison)
 
     def _feed_doors(self, doors):
         for door in doors:
@@ -78,6 +84,8 @@ class Room:
             feed_box(window, self.pos['y'], self.pos['x'], self.nlines, self.ncols, ".")
         for door in self.doors:
             door.draw_door(window)
+        for objet in self.objets:
+            objet._draw_object(window)
 
     def hidden_room(self, window):
         self.hidden = True
