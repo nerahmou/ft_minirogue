@@ -60,6 +60,7 @@ class Character(GameObject):
 
     def __init__(self):
         GameObject.__init__(self)
+        self.current_room = None
         self.lv = 1
         self.hp = 1
         self.str = 1
@@ -106,6 +107,9 @@ class Monster(Character):
         self.str = self.str + (STR_RANK * self.lv)
         self.gold = self.gold + (GOLD_RANK * self.lv)
 
+    def print_obj(self, window):
+        if self.current_room.hidden == False:
+            window.addch(self.pos['y'], self.pos['x'], self.char)
 
 class Playeur(Character):
     """
