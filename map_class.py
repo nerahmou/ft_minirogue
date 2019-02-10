@@ -13,7 +13,6 @@ class Mapobj:
         self.nether_see = True
         self.hidden = True
 
-
 class Door(Mapobj):
     """
     porte
@@ -29,7 +28,7 @@ class Door(Mapobj):
     """
     def __init__(self, x, y, door_id, room):
         Mapobj.__init__(self)
-        self.door_id = 1
+        self.id = door_id
         self.door = {'room' : room, 'road' : None}
         self.pos = { 'x' : x, 'y' : y}
 
@@ -142,7 +141,6 @@ class Floor:
         self.rooms = []
         self.roads = []
         self.monstres = []
-        self._feed_roads(floor['road'])
         self._feed_rooms(floor['room'])
 
     def _feed_rooms(self, rooms):
@@ -158,5 +156,3 @@ class Floor:
         for room in self.rooms:
             room.draw_room(window)
             i += 1
-        #for chemin in self.road:
-        #    chemin.print_chemin(window)
